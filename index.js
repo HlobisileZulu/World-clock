@@ -1,4 +1,4 @@
-function updateSydneyTime() {
+function updateCitiesTime() {
   let losAngelesElement = document.querySelector("#los-angeles");
   if (losAngelesElement) {
     let losAngelesDateElement = losAngelesElement.querySelector(".date");
@@ -22,12 +22,27 @@ function updateSydneyTime() {
       "h:mm:ss [<small>]A[</small>]"
     );
   }
+  
+  let seoulElement = document.querySelector("#seoul");
+  if (seoulElement) {
+    let seoulDateElement = seoulElement.querySelector(".date");
+    let seoulTimeElement = seoulElement.querySelector(".time");
+    let seoulTime = moment().tz("Asia/Seoul");
+
+    seoulDateElement.innerHTML = seoulTime.format("MMMM Do YYYY");
+    seoulTimeElement.innerHTML = seoulTime.format(
+      "h:mm:ss [<small>]A[</small>]"
+    );
+  }
 }
-updateSydneyTime();
-setInterval(updateSydneyTime, 1000);
+updateCitiesTime();
+setInterval(updateCitiesTime, 1000);
 
 function updateCity(event) {
   let cityTimezone = event.target.value;
+  if (cityTimezone === "current") {
+    cityTimeZone = moment.tz.guess();
+  }
   let cityName = cityTimezone.replace("_", " ").split("/")[1];
   let cityTime = moment().tz(cityTimezone);
   let citiesElement = document.querySelector("#cities");
